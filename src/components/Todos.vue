@@ -5,6 +5,7 @@
       <!-- For in Vue, use v-for and v-bind:key -->
       <div v-for="todo in allTodos" :key="todo.id" class="todo">
         {{ todo.title }}
+        <button @click="deleteTodo(todo.id)">hapus</button>
       </div>
     </div>
   </div>
@@ -17,7 +18,7 @@ export default {
   name: "Todos",
   methods: {
     //   binding namespace module
-    ...mapActions(["fetchTodos"]),
+    ...mapActions(["fetchTodos", "deleteTodo"]),
   },
   computed: mapGetters(["allTodos"]),
   created() {
@@ -40,6 +41,15 @@ export default {
   border-radius: 5px;
   text-align: center;
   position: relative;
+  cursor: pointer;
+}
+
+button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #ffff;
+  background-color: red;
   cursor: pointer;
 }
 </style>

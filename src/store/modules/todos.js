@@ -26,13 +26,23 @@ const actions = {
             completed: false
         });
         commit('newTodo', response.data);
+    },
+
+    // Menghapus Data Todo
+    async deleteTodo({ commit }, id) {
+        await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
+
+        commit('removeTodo', id);
     }
 };
 
 const mutations = {
+    // menampilkan data
     setTodos: (state, todos) => (state.todos = todos),
     // unshift untuk push data
-    newTodo: (state, todo) => state.todos.unshift(todo)
+    newTodo: (state, todo) => state.todos.unshift(todo),
+    // Menghapus data
+    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id !== id)
 };
 
 export default {
