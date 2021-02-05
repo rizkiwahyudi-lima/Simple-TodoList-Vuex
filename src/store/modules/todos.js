@@ -44,6 +44,13 @@ const actions = {
         const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`);
 
         commit('setTodos', response.data);
+    },
+
+    // Mengupdate Data Todo
+    async updateTodo({ commit }, updTodo) {
+        const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`, updTodo);
+
+        commit('updateTodo', response.data);
     }
 };
 
@@ -53,7 +60,14 @@ const mutations = {
     // unshift untuk push data
     newTodo: (state, todo) => state.todos.unshift(todo),
     // Menghapus data
-    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id !== id)
+    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id !== id),
+    // Update data
+    updateTodo: (state, updTodo) => {
+        const index = state.todos.findIndex(todo => todo.id === updTodo.id);
+        if (index !== -1) {
+            state.todos.splice(index, 1, updTodo);
+        }
+    }
 };
 
 export default {
